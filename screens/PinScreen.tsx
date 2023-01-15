@@ -27,11 +27,10 @@ export default function PinScreen() {
   const insets = useSafeAreaInsets();
   const route = useRoute();
   useEffect(() => {
-    if (route.params?.id) {
-      const pinId = route.params?.id;
-      const routePin = pins.find((p) => p?.id === pinId);
+    if (!!route.params?.pin) {
+      const routePin = route.params?.pin;
       setPin(routePin);
-      Image.getSize(routePin?.image, (width, height) =>
+      Image.getSize(routePin.urls?.full, (width, height) =>
         setRation(width / height)
       );
     }
@@ -46,19 +45,19 @@ export default function PinScreen() {
         <View style={styles.root}>
           <Image
             source={{
-              uri: pin.image,
+              uri: pin.urls?.full,
             }}
             style={[styles.image, { aspectRatio: ration }]}
           />
           <View style={styles.author}>
             <Image
               source={{
-                uri: pin.image,
+                uri: pin.user?.profile_image?.large,
               }}
               style={styles.profilePicture}
             />
             <Text style={styles.title} numberOfLines={2}>
-              {pin.title}
+              {pin.user?.name}
             </Text>
           </View>
         </View>

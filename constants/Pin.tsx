@@ -4,22 +4,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Pin(props: any) {
-  const { id, title, image } = props.pin;
+  const { id, description, urls } = props.pin;
   const onLike = () => {};
   const [ration, setRation] = useState(1);
   const navigation = useNavigation();
   const goToPinPage = () => {
-    navigation.navigate("Pin", { id });
+    navigation.navigate("Pin", { pin: props.pin });
   };
   useEffect(() => {
-    Image.getSize(image, (width, height) => setRation(width / height));
-  }, [image]);
+    Image.getSize(urls?.full, (width, height) => setRation(width / height));
+  }, [urls]);
   return (
     <Pressable onPress={goToPinPage} style={styles.pin}>
       <View>
         <Image
           source={{
-            uri: image,
+            uri: urls?.full,
           }}
           style={[styles.image, { aspectRatio: ration }]}
         />
@@ -29,7 +29,7 @@ export default function Pin(props: any) {
       </View>
 
       <Text style={styles.title} numberOfLines={2}>
-        {title}
+        {description}
       </Text>
     </Pressable>
   );

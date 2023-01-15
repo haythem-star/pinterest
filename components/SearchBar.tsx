@@ -1,8 +1,14 @@
 import React from "react";
 import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Feather, Entypo, AntDesign } from "@expo/vector-icons";
 
-const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setCLicked }) => {
+const SearchBar = ({
+  clicked,
+  searchPhrase,
+  setSearchPhrase,
+  setCLicked,
+  search,
+}) => {
   return (
     <View style={styles.container}>
       <View
@@ -24,18 +30,20 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setCLicked }) => {
           value={searchPhrase}
           onChangeText={setSearchPhrase}
           onFocus={() => {
-            setClicked(true);
+            setCLicked(true);
           }}
         />
         {/* cross Icon, depending on whether the search bar is clicked or not */}
         {clicked && (
-          <Entypo
-            name="cross"
+          <AntDesign
+            name="right"
             size={20}
             color="black"
             style={{ padding: 1 }}
             onPress={() => {
-              setSearchPhrase("");
+              console.log("press search");
+
+              search();
             }}
           />
         )}
@@ -47,7 +55,7 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setCLicked }) => {
             title="Cancel"
             onPress={() => {
               Keyboard.dismiss();
-              setClicked(false);
+              setCLicked(false);
             }}
           ></Button>
         </View>
